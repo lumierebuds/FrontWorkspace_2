@@ -51,5 +51,5 @@ console.log(readonlyTuple);
 
 let readonlyObject: { readonly name: string; age: number };
 readonlyObject = { name: "kh", age: 11 };
-// readonlyObject.name = 'mkm'; // readonly로 정의한 값은 바꿀 수 없게 만들었다. 
+//readonlyObject.name = 'mkm'; // readonly로 정의한 값은 바꿀 수 없게 만들었다. 
 readonlyObject.age = 15;
