@@ -42,7 +42,7 @@ const response: readonly [number, string] = [200, "response success"];
 // 실습문제 4) 다음 조건에 맞는 타입 지정하기
 // array 변수는 튜플이 아닙니다.
 
-let array: (number | string | boolean | undefined | object)[];
+let array: (number | string | boolean | undefined | object)[] = [12345, 'mkm', true, undefined];
 array = ['mkm', 12345, true];
 array.push({ name: 'mkm' });
 
@@ -56,8 +56,8 @@ array.push({ name: 'mkm' });
 //    => (undefined | string) 인 Union Type 
 let test1: (undefined| string)  = undefined; // ok
 test1 = '1234'; // ok
-test1 = 1234; // compile error
-test1 = true; //compile error
+//test1 = 1234; // compile error
+//test1 = true; //compile error
 
 //Q2. test2에는 true값을 넣을수 있습니다.
 //    test1에 test2변수를 넣을수도 있죠.
@@ -65,7 +65,7 @@ test1 = true; //compile error
 //    test2는 무슨 타입일까요?
 //    => 'any 타입' 
 
-let test2 : any = true; // boolean(x) , UnionType(x)
+let test2 : any = true; // boolean(x) , UnionType(x) (컴파일 단계에서 오류가 발생하지 않게 만듬)
 test1 = test2; // ok
 
 //Q3. test3에는 undefined값을 넣을수 있습니다.
@@ -75,7 +75,7 @@ test1 = test2; // ok
 //    => 'unknown 타입' 
 
 let test3 : unknown = undefined; // undefined (x) , UnionType(x)
-test1 = test3; // compile error
+// test1 = test3; // compile error
 
 
 // 실습문제 6) 다음 함수의 타입을 정의하시오
@@ -92,7 +92,9 @@ const racoonInfo = (name:string, weight:number, sex:string, neutering?:boolean):
     
     let result: string; 
     result = neutering != undefined ? `이름 : ${name} , 무게 : ${weight}, 성별 : ${sex}, 중성화 : ${neutering}` :
-                                      `이름 : ${name} , 무게 : ${weight}, 성별 : ${sex}`;
+                                      `이름 : ${name} , 무게 : ${weight}, 성별 : ${sex}`; // 중복되는 문자열을 없애고 만들 수 있다. 
+                                      
+    
     return result;
 }
  
@@ -135,10 +137,23 @@ function abc(x:(string|string[])) : (number|number[]){
     if (typeof x == 'string') {
         return parseInt(x);
     }
-    else {
-        let arr = x.map(Number);
-        return arr;
+    else if (typeof x == 'object') {
+        let numberArr: number[] = []; 
+        for (let i = 0; i < x.length; i++){
+            numberArr[i] = parseInt(x[i]);
+        }
+        return numberArr;
+
     }
+    else {
+        throw new Error();
+    }
+
+    // else {
+    //     let arr = x.map(Number);
+    //     return arr;
+    // }
+    
 }
 console.log(abc('11'));
 console.log(abc(['11', '12', '13']));
