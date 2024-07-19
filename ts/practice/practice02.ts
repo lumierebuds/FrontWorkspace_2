@@ -119,13 +119,12 @@ fn2(person); // 강남에 사는 mkm은 35살입니다.
 
 // 실습문제 7) 다음 조건을 만족하는 Object 타입을 정의하시오
 
-type callbackType = () => void; 
-type printNameType = (callback: (s:string) => void) => void;
+type CallBack = (str: string) => void; 
 
 type objectType = {
     name: 'mkm',
-    printName: printNameType,
-    call : callbackType
+    printName: (callback:CallBack) => void,
+    call: () => void
 }
 
 
@@ -144,18 +143,13 @@ obj.call(); // mkm
 
 // 실습문제 8) 다음 같은 결과 값이 나오는 함수를 만든 후 함수타입도 함께 정의하시오.
 
-// const fn = (...x :number[]) : number[] => {
-    
-//     if (x.length === 0) {
-//         throw new Error();
-//     } else {
-//         if (x[0] == 1)
-//             return [];
-//         else if(x[])
-//     }
+const fn = ([first, ...rest] : [number, ...number[]]) => {
+    for (let i = 0; i < rest.length; i++){
+        rest[i] += first;
+    }
+    return rest;
+}
 
-
-// }
 // fn([]) // error
 // fn([1]); // []
 // fn([1,2]); // [3]
