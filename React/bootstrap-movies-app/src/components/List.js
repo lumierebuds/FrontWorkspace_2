@@ -1,6 +1,6 @@
 import { Table, Button } from "reactstrap";
 
-function List({ props }) {
+function List(props ) {
   let { list, onDelete } = props; // 구조분해 할당을 통해서 가져온다.
   console.log(props);
   return (
@@ -20,11 +20,11 @@ function List({ props }) {
           {list.map((value) => {
             return (
               <tr>
-                <td>{value.bno}</td>
+                <td>{value.id}</td>
                 <td>{value.title}</td>
                 <td>{value.genre}</td>
                 <td>{value.release_date}</td>
-                    <td><Button onClick={ ()=>onDelete(value.bno)}>Delete</Button></td>
+                    <td><Button onClick={()=>onDelete(value.id)}>Delete</Button></td>
               </tr>
             );
           })}
