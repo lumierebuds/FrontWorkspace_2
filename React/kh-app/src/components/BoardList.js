@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 
 function BoardList(props) {
-    let { boardList } = props;
-    console.log(props);
+    let { boardList, setBoardDetail } = props;
+    const navi = useNavigate();
+
     return (
         <div className="outer">
             <h2>일반게시판</h2>
@@ -20,7 +22,10 @@ function BoardList(props) {
                     {
                         boardList.map((value) => {
                             return (
-                            <tr key={value.글번호}>
+                                <tr key={value.글번호} onClick={() => {
+                                    setBoardDetail(value);
+                                    navi('/detail/' + value.글번호);
+                                }}>
                                     <td>{value.글번호}</td>
                                     <td>{value.글제목}</td>
                                     <td>{value.작성자}</td>
