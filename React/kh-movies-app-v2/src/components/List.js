@@ -1,12 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { Table, Button } from "reactstrap";
 
 function List(props ) {
-  let { list, onDelete } = props; // 구조분해 할당을 통해서 가져온다.
-  console.log(props);
+  let { list, onDelete, setBoardDetail } = props; // 구조분해 할당을 통해서 가져온다.
+
+  const navi = useNavigate();
+
   return (
-    <div id="movie-area">
+    <div>
       <h1>KH1-Movies</h1>
-      <Table>
+      <table className="list-table">
         <thead>
           <tr>
             <th>글번호</th>
@@ -19,17 +22,20 @@ function List(props ) {
         <tbody>
           {list.map((value) => {
             return (
-              <tr>
+              <tr key={value.id} onClick={() => {
+                setBoardDetail(value);
+                navi('/detail/' + value.id);
+              }}>
                 <td>{value.id}</td>
                 <td>{value.title}</td>
                 <td>{value.genre}</td>
                 <td>{value.release_date}</td>
-                    <td><Button onClick={()=>onDelete(value.id)}>Delete</Button></td>
+                <td><Button onClick={()=>onDelete(value.id)}>Delete</Button></td>
               </tr>
             );
           })}
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 }

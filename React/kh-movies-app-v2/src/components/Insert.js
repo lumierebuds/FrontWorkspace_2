@@ -8,6 +8,7 @@ function Insert(props) {
         id: 0, 
         title: '', 
         genre: '',
+        story:'',
         release_date: ''
     });
 
@@ -40,7 +41,7 @@ function Insert(props) {
     return (
         <div>
             <h1>Create Movie</h1>
-            <Table>
+            <table className="enroll-table">
                 <tr>
                     <th>ID</th>
                     <td>
@@ -59,6 +60,13 @@ function Insert(props) {
                         <input type="text" placeholder="Input movie genre" value={movie.genre} name="genre" onInput={onInputChange}  style={{width:"100%"}}/>
                     </td>
                 </tr>
+                <tr>
+                    <th>줄거리</th>
+                    <td>
+                        <textarea placeholder="Input movie story" value={movie.story} name="story" onInput={onInputChange} style={{width:"100%" , height:"200px"}} ></textarea>
+                    </td>
+                </tr>
+
 
                 <tr>
                     <th>출시일</th>
@@ -66,7 +74,7 @@ function Insert(props) {
                         <input type="date" style={{width:"100%"}} value={movie.release_date} name="release_date" onInput={onInputChange}/>
                     </td>
                 </tr>
-            </Table>
+            </table>
             <div>
                 <Button onClick={insertMovie}>Add Movie</Button>
             </div>

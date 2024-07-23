@@ -65,15 +65,13 @@ a{
 
 /* 게시글 목록*/
 .list-table{
-  width: 100%;  
+  width: 90%;  
+  margin: 0 auto; 
 }
 .list-table tbody>tr:hover *{
   cursor: pointer;
   background-color: lightgray;
   color: white;
-}
-.list-table button{
-  width: 100%;  
 }
 
 /* 게시글 상세보기 */
