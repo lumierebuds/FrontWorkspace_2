@@ -1,10 +1,17 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { Table, Button } from "reactstrap";
 
 function Detail(props) {
 
-    let {boardDetail} = props; 
+    let { list } = props; 
+    let { id } = useParams();
 
-    console.log(boardDetail);
+    const movie = list.find((value) => value.id == id); 
+
+
+    const navi = useNavigate();
+
+    console.log(movie);
 
     return (
         <div>
@@ -13,36 +20,36 @@ function Detail(props) {
                 <tr>
                     <th>ID</th>
                     <td style={{width:"80%"}}>
-                        {boardDetail.id}
+                        {movie.id}
                     </td>
                 </tr>
                 <tr>
                     <th>제목</th>
                     <td style={{width:"80%" }}>
-                       {boardDetail.title}
+                       {movie.title}
                     </td>
                 </tr>
                 <tr>
                     <th>장르</th>
                     <td style={{width:"80%" }}>
-                        {boardDetail.genre}
+                        {movie.genre}
                     </td>
                 </tr>
                 <tr>
                     <th>줄거리</th>
                     <td style={{width:"80%", height:"200px" }}>
-                        {boardDetail.story}
+                        {movie.story}
                     </td>
                 </tr>
                 <tr>
                     <th>출시일</th>
                     <td style={{width:"80%" }}>
-                       {boardDetail.release_date}
+                       {movie.release_date}
                     </td>
                 </tr>
             </table>
             <div>
-                <Button>Edit Movie</Button>
+                <Button onClick={()=> {navi('/update/'+movie.id)}}>Edit Movie</Button>
             </div>
         </div>
     )

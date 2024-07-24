@@ -23,14 +23,16 @@ function List(props ) {
           {list.map((value) => {
             return (
               <tr key={value.id} onClick={() => {
-                setBoardDetail(value);
                 navi('/detail/' + value.id);
               }}>
                 <td>{value.id}</td>
                 <td>{value.title}</td>
                 <td>{value.genre}</td>
                 <td>{value.release_date}</td>
-                <td><Button onClick={()=>onDelete(value.id)}>Delete</Button></td>
+                <td><Button onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(value.id)
+                }}>Delete</Button></td>
               </tr>
             );
           })}

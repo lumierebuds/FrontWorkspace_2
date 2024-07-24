@@ -6,6 +6,7 @@ import {useState} from "react"
 import data from './data';
 import { Routes, Route, Link } from 'react-router-dom';
 import Outer from './Outer';
+import Update from './components/Update';
 
 
 function App() {
@@ -34,12 +35,13 @@ function App() {
         <Insert list={list} setList={setList}></Insert> */}
       {
         <Routes>
-          <Route path='/' element={<Outer/>}>
-            <Route path="/list" element={<List list={list} onDelete={onDelete} setBoardDetail={setBoardDetail}/>}/>
-            <Route path="/insert" element={<Insert list={list} setList={setList}/>} />
-            <Route path="/detail/:id" element={<Detail list={list} boardDetail={boardDetail}/>}/>
+          <Route path='/' element={<List list={list} onDelete={onDelete} setBoardDetail={setBoardDetail} />}/>
+          <Route path='/' element={<Outer />}>
+            <Route path="list" element={<List list={list} onDelete={onDelete} setBoardDetail={setBoardDetail}/>}/>
+            <Route path="insert" element={<Insert list={list} setList={setList}/>} />
+            <Route path="detail/:id" element={<Detail list={list}/>} />
+            <Route path="update/:id" element={<Update list={list} setList={setList} setBoardDetail={setBoardDetail} />}/>
           </Route>
-          
         </Routes>
       }
 
