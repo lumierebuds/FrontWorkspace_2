@@ -5,6 +5,7 @@ import counterSlice from '../features/createSlice';
 let store = configureStore({
     reducer: {
         counter: counterSlice,
+    
         // member : memberSlice
         // board : boardSlice
     }

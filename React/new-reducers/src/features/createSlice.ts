@@ -23,6 +23,27 @@ const counterSlice = createSlice({
     }
 })
 
+// 투두 리스트
+type Item = {
+    value: string
+};
+
+const item: Item = { value: "" };
+
+const todoSlice = createSlice({
+    name: 'todo',
+    initialState: item,
+    reducers: {
+        insert: (state, action: PayloadAction<string>) => {
+            return { ...state, value: action.payload };
+        },
+        delete: (state) => {
+            return { ...state };
+        }
+    }
+});
+
+
 export const {increment, decrement , increByAmount} = counterSlice.actions; // destructuring 문법으로 인해 increment, decrement 반환
 
 export default counterSlice.reducer; // 'counter' 반환 
