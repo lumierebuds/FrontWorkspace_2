@@ -1,12 +1,12 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import counterSlice from '../features/counterSlice';
-import todoSlice from "../features/todoSlice";
+import todoSlice from "../features/todoListSlice";
 
 let store = configureStore({
     reducer: {
         counter: counterSlice,
-        todo: todoSlice
+        todolist: todoSlice
         // member : memberSlice
         // board : boardSlice
     }
