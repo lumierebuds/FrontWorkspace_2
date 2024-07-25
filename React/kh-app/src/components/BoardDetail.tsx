@@ -1,24 +1,24 @@
 import { useState ,useEffect, useContext} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../App";
+import { Board, Props } from "../type/boardType";
 
-function BoardDetail(props) {
+
+function BoardDetail(props:Props) {
     
     const context = useContext(Context);
     console.log(context);
     
-
-    let { boardList } = props;
-    
     let navigate = useNavigate();
 
+    const { boardList } = props;
 
     // 1) 내가 선택한 게시글 정보 얻어오기
     // 2) 게시글 정보 BoardDetail에 넘겨주기 
     // 3) 데이터 바인딩 
     
     const { boardNo } = useParams(); // 'detail/boardNo' 로 요청이 들어올때 바인딩 되는 값들
-    const boardDetail = boardList.find((value) => value.글번호 == boardNo);  // 글번호에 해당하는 게시글 정보를 반환해서 해당 페이지에서 ㅂ볼 ㅅ 있다.
+    const boardDetail = boardList.find((value) => value.글번호 === Number(boardNo));  // 글번호에 해당하는 게시글 정보를 반환해서 해당 페이지에서 ㅂ볼 ㅅ 있다.
 
     let [count, setCount] = useState(0);
     
@@ -35,6 +35,7 @@ function BoardDetail(props) {
     
 
     return (
+        boardDetail ?  // 삼항연산자 형태로 boardDetail이 있을때 반환되는 요소들
         <div className="outer">
             <h2>게시판 상세보기</h2>
             <table className="detail-table">
@@ -58,7 +59,8 @@ function BoardDetail(props) {
                     navigate('/update')
                 }}>수정</button>
             </div>
-        </div>
+            </div>
+        :null 
     )
 }
 

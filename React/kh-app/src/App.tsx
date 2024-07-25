@@ -2,26 +2,27 @@ import { createContext, useEffect, useState } from 'react';
 import './App.css';
 import BoardDetail from './components/BoardDetail';
 import BoardInsert from './components/BoardInsert';
-import BoardList from "./components/BoardList"
+import BoardList from "./components/BoardList";
 import BoardUpdate from './components/BoardUpdate';
+import Outer from './components/Outer';
 
+import { Board, Props, SetBoardDetail,SetBoardList } from './type/boardType';
 
 import axios from 'axios';
 
 
 import { Route, Routes, Link } from 'react-router-dom';
-import Outer from './components/Outer.js';
+import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import { logout, randomProfile } from './features/userSlice';
+import LoginModal from './components/LoginModal';
 
 
-export let Context = createContext(); // context == state 보관소 
+export let Context = createContext({}); // context == state 보관소 
 
 
 function App() {
 
-  let [layout, setLayout] = useState(0);
-  // 0 : list (맨처음 들어올 항목)
-  // 1 : insert
-  // 2 : detail
 
   // useEffect : 컴포넌트가 렌더링될 때를 감지하여 렌더링된 이후 실행할 코드를
   // 기술하는 함수. 컴포넌트에는 LifeCycle이라는 개념이 있는데, 컴포넌트가 처음 로딩되는 시기를 mount
@@ -37,7 +38,7 @@ function App() {
 
 
   
-  let [boardList, setBoardList] = useState([]);
+  let [boardList, setBoardList] = useState<Board[]>([]);
   
   /*
     axions
@@ -63,9 +64,9 @@ function App() {
   }, []); 
   
   
-  let [boardDetail, setBoardDetail] = useState({}); // 빈 객체로 초기화 
+  let [boardDetail, setBoardDetail] = useState<Board>(boardList[0]); // 빈 객체로 초기화 
 
-  let props = {
+  let props: Props = {
     boardList,
     setBoardList,
     boardDetail,
@@ -73,12 +74,38 @@ function App() {
   }; // props 라는 객체로 필요한 데이터를 관리함. 이 데이터들을 컴포넌트들에게 전달하도록 한다. 
 
 
+  let user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch(); 
+
+  let [loginModalState, setLoginModalState] = useState(false);
+
+  const loginModal = () => {
+    setLoginModalState(!loginModalState);
+  }
 
   return (
     <div className="App">
-      <div className="header">
-        <h3 style={{fontWeight: 'bolder'}}>KH C CLASS</h3>
+      <div className='header'>
+        <div className="header-1">
+          <h3 style={{fontWeight: 'bolder'}}>KH C CLASS</h3>
+        </div>
+        <div className="header-2">
+          <img src={user.profile} onClick={() => { dispatch(randomProfile())}}></img>
+          <div className="user-info">
+            <span className='user-nickname'>{user.nickname}</span>
+            <span className='user-email'>{user.email}</span>
+            
+          </div>
+          {
+            user.email ? 
+              <button onClick={() => {dispatch(logout())}}>로그아웃</button>
+              : 
+              <button onClick={() => { loginModal() }}>로그인</button>
+          }
+        </div>
+        
       </div>
+      
       <div className="nav">
         <Link to="/list">일반 게시판</Link>
         <Link to="/insert">게시글등록</Link>
@@ -106,9 +133,13 @@ function App() {
           }/>
           </Routes>
           </Context.Provider>
+        
       }
+      { // 로그인 모달창 
+        loginModalState &&
+        <LoginModal setLoginModalState={setLoginModalState} />}
     </div>
-  );
+  ); 
 }
 
 export default App;

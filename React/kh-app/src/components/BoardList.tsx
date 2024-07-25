@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { Props } from "../type/boardType";
 
-function BoardList(props) {
+function BoardList(props:Props) {
     let { boardList, setBoardDetail } = props;
     const navi = useNavigate();
 
